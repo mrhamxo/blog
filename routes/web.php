@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DemoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +20,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::controller(DemoController::class)->group(function () {
+    Route::get('/about', 'about')->name('about.page');
+    Route::get('/contact', 'contact')->name('contact.page');
+});
+
+// all admin route
+Route::controller(AdminController::class)->group(function () {
+    Route::get('/admin/logout', 'destroy');
+    // Route::get('/contact', 'contact')->name('contact.page');
+});
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.admin_master');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -28,4 +41,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';
