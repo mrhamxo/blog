@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DemoController;
+use App\Http\Controllers\Home\HomeSliderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.index');
 });
 
 Route::controller(DemoController::class)->group(function () {
@@ -31,7 +32,16 @@ Route::controller(AdminController::class)->group(function () {
     Route::get('/admin/profile', 'profile')->name('admin.profile');
     Route::get('/edit/profile', 'editProfile')->name('edit.profile');
     Route::post('/store/profile', 'storeProfile')->name('store.profile');
+    Route::get('/change/password', 'changePassword')->name('change.password');
+    Route::post('/update/password', 'updatePassword')->name('update.password');
 });
+
+// all Home Slide route
+Route::controller(HomeSliderController::class)->group(function () {
+    Route::get('/home/slide', 'homeSlider')->name('home.slide');
+    Route::post('/update/slider', 'updateSlider')->name('update.slider');
+});
+
 
 Route::get('/dashboard', function () {
     return view('admin.index');

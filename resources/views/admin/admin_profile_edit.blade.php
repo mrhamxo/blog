@@ -47,7 +47,8 @@
                                     <label for="example-text-input" class="col-sm-2 col-form-label"></label>
                                     <div class="col-sm-10">
                                         <img class="rounded avatar-lg" id="show_image"
-                                            src="{{ (!empty($editData->profile_image)) ? url('upload/admin-images/'.$editData->profile_image) : url('upload/no-image.png') }}" alt="Profile image">
+                                            src="{{ !empty($editData->profile_image) ? url('upload/admin-images/' . $editData->profile_image) : url('upload/no-image.png') }}"
+                                            alt="Profile image">
                                     </div>
                                 </div>
                                 <!-- end row -->
