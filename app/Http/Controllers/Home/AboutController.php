@@ -14,7 +14,7 @@ class AboutController extends Controller
     public function aboutPage()
     {
         $aboutPage = About::find(1);
-        return view('admin.about_page.about_page_all', compact('aboutPage'));
+        return view('admin.about.about_page_all', compact('aboutPage'));
     }
     public function updateAbout(Request $request)
     {
@@ -64,7 +64,7 @@ class AboutController extends Controller
     }
     public function aboutMultiImage()
     {
-        return view('admin.about_page.multi_image');
+        return view('admin.about.multi_image');
     }
     public function storeMultiImage(Request $request)
     {
@@ -93,12 +93,12 @@ class AboutController extends Controller
     public function allMultiImage()
     {
         $allMultiImage = MultiImage::all();
-        return view('admin.about_page.all_multi_image', compact('allMultiImage'));
+        return view('admin.about.all_multi_image', compact('allMultiImage'));
     }
     public function EditMultiImage($id)
     {
         $editMultiImage = MultiImage::findOrFail($id);
-        return view('admin.about_page.edit_multi_image', compact('editMultiImage'));
+        return view('admin.about.edit_multi_image', compact('editMultiImage'));
     }
     public function updateMultiImage(Request $request)
     {
@@ -126,16 +126,16 @@ class AboutController extends Controller
     public function DeleteMultiImage($id)
     {
         // first method to delete image
-        // $deleteMultiImage = MultiImage::findOrFail($id);
-        // $img = $deleteMultiImage->multi_image;
-        // unlink($img);
+        $deleteMultiImage = MultiImage::findOrFail($id);
+        $img = $deleteMultiImage->multi_image;
+        unlink($img);
 
-        // MultiImage::findOrFail($id)->delete;
+        MultiImage::findOrFail($id)->delete();
 
         // 2nd method to delete image
-        $deleteMultiImage = MultiImage::findOrFail($id);
+        // $deleteMultiImage = MultiImage::findOrFail($id);
 
-        $deleteMultiImage->delete();
+        // $deleteMultiImage->delete();
 
         $toasterNotification = array(
             'message' => 'Multi Image Deleted Successfully',
