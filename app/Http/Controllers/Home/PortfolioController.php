@@ -32,7 +32,7 @@ class PortfolioController extends Controller
             [
                 'portfolio_name.required' => 'Portfolio Name is Required',
                 'portfolio_title.required' => 'Portfolio Title is Required',
-            ]
+                ]
         );
         $image = $request->file('portfolio_image');
         $name_gen = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
@@ -124,5 +124,10 @@ class PortfolioController extends Controller
     {
         $portfolioDetails = Portfolio::findOrFail($id);
         return view('frontend.portfolio_details', compact('portfolioDetails'));
+    }
+    public function homePortfolio()
+    {
+        $homePortfolio = Portfolio::latest()->get();
+        return view('frontend.portfolio', compact('homePortfolio'));
     }
 }

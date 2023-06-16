@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                        <h4 class="mb-sm-0">Blog Category Page</h4>
+                        <h4 class="mb-sm-0">All Blog Page</h4>
                     </div>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                     <div class="card">
                         <div class="card-body">
 
-                            {{-- <h4 class="card-title">Blog Category Data</h4><br><br> --}}
+                            <h4 class="card-title">Blog Data</h4>
 
                             <table id="datatable" class="table table-bordered dt-responsive nowrap"
                                 style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -26,24 +26,32 @@
                                     <tr>
                                         <th>SNo:</th>
                                         <th>Blog Category</th>
+                                        <th>Blog Title</th>
+                                        <th>Blog Tags</th>
+                                        <th>Blog Images</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
 
 
                                 <tbody>
-                                    {{-- @php($i = 1) --}}
-                                    @foreach ($blogCategory as $key => $item)
+                                    @php($i = 1)
+                                    @foreach ($allBlog as $item)
                                         <tr>
-                                            {{-- <td>{!! $i++ !!}</td> --}}
-                                            <td>{{ $key+1 }}</td>
-                                            <td>{{ $item->blog_category }}</td>
+                                            <td>{!! $i++ !!}</td>
+                                            <td>{{ $item['category']['blog_category'] }}</td>
+                                            <td>{{ $item->blog_title }}</td>
+                                            <td>{{ $item->blog_tags }}</td>
                                             <td>
-                                                <a href="{{ route('edit.blog.category', $item->id) }}" class="btn btn-info sm"
+                                                <img src="{{ asset($item->blog_image) }}"
+                                                    style="width: 60px; height: 50px;" alt="">
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('edit.blog', $item->id) }}" class="btn btn-info sm"
                                                     title="Edit Data">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="{{ route('delete.blog.category', $item->id) }}"
+                                                <a href="{{ route('delete.blog', $item->id) }}"
                                                     class="btn btn-danger sm" title="Delete Data" id="delete">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </a>

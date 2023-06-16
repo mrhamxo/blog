@@ -4,6 +4,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DemoController;
 use App\Http\Controllers\Home\AboutController;
 use App\Http\Controllers\Home\BlogCategoryController;
+use App\Http\Controllers\Home\BlogController;
+use App\Http\Controllers\Home\ContactController;
+use App\Http\Controllers\Home\FooterController;
 use App\Http\Controllers\Home\HomeSliderController;
 use App\Http\Controllers\home\PortfolioController;
 use App\Http\Controllers\ProfileController;
@@ -25,18 +28,20 @@ Route::get('/', function () {
 });
 
 Route::controller(DemoController::class)->group(function () {
-    Route::get('/about', 'about')->name('about.page');
+    Route::get('/', 'homeMain')->name('home');
     Route::get('/contact', 'contact')->name('contact.page');
 });
 
 // all admin routes
-Route::controller(AdminController::class)->group(function () {
-    Route::get('/admin/logout', 'destroy')->name('admin.logout');
-    Route::get('/admin/profile', 'profile')->name('admin.profile');
-    Route::get('/edit/profile', 'editProfile')->name('edit.profile');
-    Route::post('/store/profile', 'storeProfile')->name('store.profile');
-    Route::get('/change/password', 'changePassword')->name('change.password');
-    Route::post('/update/password', 'updatePassword')->name('update.password');
+Route::middleware(['auth'])->group(function () {
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/admin/logout', 'destroy')->name('admin.logout');
+        Route::get('/admin/profile', 'profile')->name('admin.profile');
+        Route::get('/edit/profile', 'editProfile')->name('edit.profile');
+        Route::post('/store/profile', 'storeProfile')->name('store.profile');
+        Route::get('/change/password', 'changePassword')->name('change.password');
+        Route::post('/update/password', 'updatePassword')->name('update.password');
+    });
 });
 
 // all Home Slide routes
@@ -69,6 +74,7 @@ Route::controller(PortfolioController::class)->group(function () {
     Route::post('/update/portfolio', 'updatePortfolio')->name('update.portfolio');
     Route::get('/delete/portfolio/{id}', 'deletePortfolio')->name('delete.portfolio');
     Route::get('/portfolio/details/{id}', 'portfolioDetails')->name('portfolio.details');
+    Route::get('/portfolio', 'homePortfolio')->name('home.portfolio');
 });
 
 // all Blog Category routes
@@ -79,6 +85,35 @@ Route::controller(BlogCategoryController::class)->group(function () {
     Route::get('/edit/blog/category/{id}', 'editBlogCategory')->name('edit.blog.category');
     Route::post('/update/blog/category/{id}', 'updateBlogCategory')->name('update.blog.category');
     Route::get('/delete/blog/category/{id}', 'deleteBlogCategory')->name('delete.blog.category');
+});
+
+// all Blog routes
+Route::controller(BlogController::class)->group(function () {
+    Route::get('/all/blog', 'allBlog')->name('all.blog');
+    Route::get('/add/blog', 'addBlog')->name('add.blog');
+    Route::post('/store/blog', 'storeBlog')->name('store.blog');
+    Route::get('/edit/blog/{id}', 'editBlog')->name('edit.blog');
+    Route::post('/update/blog', 'updateBlog')->name('update.blog');
+    Route::get('/delete/blog/{id}', 'deleteBlog')->name('delete.blog');
+
+    Route::get('/blog/details/{id}', 'blogDetails')->name('blog.details');
+    Route::get('/category/blog/{id}', 'categoryBlog')->name('category.blog');
+
+    Route::get('/blog', 'homeBlog')->name('home.blog');
+});
+
+// all Footer routes
+Route::controller(FooterController::class)->group(function () {
+    Route::get('/footer/setup', 'footerSetup')->name('footer.setup');
+    Route::post('/update/footer', 'updateFooter')->name('update.footer');
+});
+
+// all Contact routes
+Route::controller(ContactController::class)->group(function () {
+    Route::get('/contact', 'contact')->name('contact.me');
+    Route::post('/store/message', 'storeMessage')->name('store.message');
+    Route::get('/Contact/message', 'ContactMessage')->name('Contact.message');
+    Route::get('/delete/message/{id}', 'deleteMessage')->name('delete.message');
 });
 
 
